@@ -49,6 +49,7 @@ export type ReportData = {
     rationale: string
   }[]
   videoBreakdown: VideoEntry[]
+  followerGrowth: number[]
   generatedAt: string
 }
 
@@ -283,6 +284,11 @@ export const mockReport: ReportData = {
       saves: 340,
       comments: 500,
     },
+  ],
+  followerGrowth: [
+    41000, 41250, 41180, 41520, 41900, 42150, 42040, 42380, 42860, 43100,
+    43220, 43010, 43450, 43940, 44180, 44090, 44560, 45020, 44800, 45250,
+    45640, 45920, 46210, 46080, 46540, 46820, 47050, 47230, 47510, 47800,
   ],
   generatedAt: '2026-05-01T19:32:00+08:00',
 }

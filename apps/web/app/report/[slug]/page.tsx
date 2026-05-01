@@ -1,5 +1,6 @@
 import { mockReport } from '@/lib/mockReport'
 import { buildNarrative } from '@/lib/reportNarrative'
+import Nav from '@/components/landing/Nav'
 import ReportHeader from '@/components/report/ReportHeader'
 import HookScore from '@/components/report/HookScore'
 import AudienceSignals from '@/components/report/AudienceSignals'
@@ -26,10 +27,12 @@ export default function ReportPage() {
 
   return (
     <main style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg)' }}>
+      <Nav />
       <ReportHeader
         creator={mockReport.creator}
         hookScoreLabel={mockReport.hookScore.label}
         narrative={narrative}
+        followerGrowth={mockReport.followerGrowth}
       />
       <ReportTabs overview={overview} videoBreakdown={breakdown} />
     </main>

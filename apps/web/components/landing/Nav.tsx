@@ -14,10 +14,11 @@ export default function Nav() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`animate-enter fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? 'backdrop-blur-sm' : ''
       }`}
       style={{
+        animationDelay: '0ms',
         backgroundColor: scrolled ? 'oklch(97% 0.008 75 / 0.92)' : 'transparent',
         borderBottom: scrolled ? '1px solid var(--color-border)' : '1px solid transparent',
       }}
@@ -46,6 +47,13 @@ export default function Nav() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           <Link
+            href="#story"
+            className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
+            style={{ fontWeight: 400 }}
+          >
+            Story
+          </Link>
+          <Link
             href="#what-gia-shows"
             className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
             style={{ fontWeight: 400 }}
@@ -53,11 +61,11 @@ export default function Nav() {
             What GIA shows
           </Link>
           <Link
-            href="#how-it-works"
+            href="#pricing"
             className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
             style={{ fontWeight: 400 }}
           >
-            How it works
+            Pricing
           </Link>
           <Link
             href="/report/sample"
@@ -68,7 +76,7 @@ export default function Nav() {
           </Link>
           <Link
             href="/analyze"
-            className="inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold transition-all hover:brightness-90 active:scale-[0.97] no-underline"
+            className="btn-primary inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold no-underline"
             style={{
               backgroundColor: 'var(--color-accent)',
               color: 'var(--color-bg)',
@@ -83,7 +91,7 @@ export default function Nav() {
         <div className="flex md:hidden">
           <Link
             href="/analyze"
-            className="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold no-underline"
+            className="btn-primary inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold no-underline"
             style={{
               backgroundColor: 'var(--color-accent)',
               color: 'var(--color-bg)',

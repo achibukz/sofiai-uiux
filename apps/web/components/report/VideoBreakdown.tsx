@@ -178,30 +178,63 @@ export default function VideoBreakdown({ videos }: Props) {
                       padding: 'clamp(20px, 3vw, 32px)',
                     }}
                   >
-                    {/* Top row: hook type badge + score + metrics grid */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, marginBottom: 24 }}>
-                      <span
+                    {/* Top row: thumbnail + hook type info */}
+                    <div style={{ display: 'flex', gap: 20, marginBottom: 24, alignItems: 'flex-start' }}>
+                      {/* Thumbnail placeholder */}
+                      <div
                         style={{
-                          display: 'inline-flex',
+                          flexShrink: 0,
+                          width: 72,
+                          aspectRatio: '9 / 16',
+                          backgroundColor: 'var(--color-surface-raised)',
+                          border: '1px solid var(--color-border)',
+                          borderRadius: 6,
+                          display: 'flex',
                           alignItems: 'center',
-                          padding: '4px 12px',
-                          borderRadius: 99,
-                          fontSize: '0.75rem',
-                          fontWeight: 600,
-                          letterSpacing: '0.04em',
-                          textTransform: 'uppercase',
-                          backgroundColor: 'var(--color-accent)',
-                          color: 'var(--color-bg)',
+                          justifyContent: 'center',
+                          padding: '6px 4px',
                         }}
                       >
-                        {HOOK_TYPE_LABELS[video.hookType] ?? video.hookType}
-                      </span>
-                      <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-                        Trigger: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.trigger}</strong>
-                      </span>
-                      <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-                        Pacing: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.pacing}</strong>
-                      </span>
+                        <span
+                          style={{
+                            fontSize: '0.5625rem',
+                            fontWeight: 600,
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                            color: 'var(--color-accent)',
+                            textAlign: 'center',
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          Video Thumbnail
+                        </span>
+                      </div>
+
+                      {/* Hook type badge + meta */}
+                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, paddingTop: 4 }}>
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            padding: '4px 12px',
+                            borderRadius: 99,
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                            backgroundColor: 'var(--color-accent)',
+                            color: 'var(--color-bg)',
+                          }}
+                        >
+                          {HOOK_TYPE_LABELS[video.hookType] ?? video.hookType}
+                        </span>
+                        <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
+                          Trigger: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.trigger}</strong>
+                        </span>
+                        <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
+                          Pacing: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.pacing}</strong>
+                        </span>
+                      </div>
                     </div>
 
                     {/* Metrics grid */}

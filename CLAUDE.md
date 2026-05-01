@@ -77,6 +77,21 @@ Everything is hardcoded. Don't add Prisma, don't add `fetch` to TikTok, don't ad
 
 Tone: **premium-playful hybrid** — editorial typography and structure with personality moments. Warm and approachable, not cold SaaS.
 
+### Landing page sections (Prototype 2 — current)
+The landing (`/`) now has these sections in order:
+
+1. **Nav** — fixed, with anchors: Story, What GIA shows, Pricing, See sample
+2. **Hero** — decorative maroon arc, gold rule eyebrow, `8vw/7.5rem` headline, maroon-header report card preview, social proof bar (67 creators / 4.8 rating / 2min)
+3. **HowItWorks** — 3-step horizontal timeline
+4. **GIAStory** — origin story: left editorial maroon panel (giant GIA watermark, SOFI AI gold badge), right copy explaining why existing tools fail Filipino creators
+5. **WhatGIAShows** — 4 alternating feature sections (hook score, audience signals, sentiment, recommendations)
+6. **Positioning** — feature comparison table vs TikTok built-in / generic AI tools
+7. **Pricing** — 3-tier PHP pricing: Free / ₱299 Starter / ₱799 Pro (Pro card in solid maroon)
+8. **FinalCTA** — full maroon background section with cream headline and decorative rings
+9. **Footer**
+
+New component files: `components/landing/GIAStory.tsx`, `components/landing/Pricing.tsx`.
+
 ### Report dashboard tabs
 The report page (`/report/[slug]`) has two tabs:
 - **Overview** — hook score, audience signals, sentiment, post ideas, footer actions

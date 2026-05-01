@@ -41,74 +41,92 @@ export default function HookScore({ hookScore }: Props) {
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
             color: 'var(--color-text-faint)',
-            margin: '0 0 24px 0',
+            margin: '0 0 20px 0',
           }}
         >
           Hook Score
         </p>
 
-        {/* Bar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
-          <div
+        {/* Editorial large number */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 20 }}>
+          <span
             style={{
-              flex: 1,
-              height: 8,
-              backgroundColor: 'var(--color-border)',
-              borderRadius: 4,
-              position: 'relative',
+              fontWeight: 800,
+              fontSize: 'clamp(3.25rem, 7vw, 5.5rem)',
+              letterSpacing: '-0.04em',
+              lineHeight: 1,
+              color: 'var(--color-text)',
             }}
           >
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: `${hookScore.score}%`,
-                backgroundColor: 'var(--color-accent)',
-                borderRadius: 4,
-                transition: 'width 800ms cubic-bezier(0.16, 1, 0.3, 1)',
-              }}
-            />
-            {/* Marker */}
-            <div
-              style={{
-                position: 'absolute',
-                left: `${hookScore.score}%`,
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: 18,
-                height: 18,
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-accent)',
-                boxShadow: '0 0 0 4px var(--color-surface), 0 2px 8px rgba(0,0,0,0.4)',
-                zIndex: 1,
-              }}
-            />
-          </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, minWidth: 'fit-content' }}>
-            <span
-              style={{
-                fontWeight: 700,
-                fontSize: '1.25rem',
-                color: 'var(--color-accent)',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {hookScore.score}
-            </span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--color-text-faint)' }}>/100</span>
-            <span
-              style={{
-                marginLeft: 4,
-                fontSize: '0.875rem',
-                fontWeight: 600,
-                color: 'var(--color-accent)',
-              }}
-            >
-              {hookScore.label}
-            </span>
-          </div>
+            {hookScore.score}
+          </span>
+          <span
+            style={{
+              fontWeight: 400,
+              fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+              color: 'var(--color-text-faint)',
+              letterSpacing: '-0.01em',
+            }}
+          >
+            / 100
+          </span>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '4px 12px',
+              borderRadius: 99,
+              backgroundColor: 'var(--color-accent-muted)',
+              color: 'var(--color-accent)',
+              fontWeight: 600,
+              fontSize: '0.75rem',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              marginLeft: 4,
+            }}
+          >
+            {hookScore.label}
+          </span>
+        </div>
+
+        {/* Track bar */}
+        <div
+          style={{
+            height: 6,
+            backgroundColor: 'var(--color-border)',
+            borderRadius: 3,
+            position: 'relative',
+            maxWidth: 480,
+            marginBottom: 24,
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: visible ? `${hookScore.score}%` : '0%',
+              backgroundColor: 'var(--color-accent)',
+              borderRadius: 3,
+              transition: 'width 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              left: visible ? `${hookScore.score}%` : '0%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 14,
+              height: 14,
+              borderRadius: '50%',
+              backgroundColor: 'var(--color-accent)',
+              boxShadow: '0 0 0 3px var(--color-surface), 0 2px 8px rgba(0,0,0,0.35)',
+              zIndex: 1,
+              transition: 'left 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          />
         </div>
 
         <p

@@ -1,9 +1,12 @@
 import Nav from '@/components/landing/Nav'
 import Hero from '@/components/landing/Hero'
 import HowItWorks from '@/components/landing/HowItWorks'
+import GIAStory from '@/components/landing/GIAStory'
 import WhatGIAShows from '@/components/landing/WhatGIAShows'
 import Positioning from '@/components/landing/Positioning'
+import Pricing from '@/components/landing/Pricing'
 import FinalCTA from '@/components/landing/FinalCTA'
+import Footer from '@/components/landing/Footer'
 
 export default function LandingPage() {
   return (
@@ -11,9 +14,12 @@ export default function LandingPage() {
       <Nav />
       <Hero />
       <HowItWorks />
+      <GIAStory />
       <WhatGIAShows />
       <Positioning />
+      <Pricing />
       <FinalCTA />
+      <Footer />
     </>
   )
 }

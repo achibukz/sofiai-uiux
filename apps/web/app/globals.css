@@ -73,3 +73,80 @@ html {
   0%   { transform: scale(1);   opacity: 0.4; }
   100% { transform: scale(1.8); opacity: 0; }
 }
+
+/* CTA button elevation */
+.btn-primary {
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+.btn-primary:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 32px oklch(32% 0.135 15 / 0.20);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+/* Hero report card — document-placement entrance */
+@keyframes enterCard {
+  from {
+    opacity: 0;
+    transform: translateY(16px) rotate(-1deg) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-enter-card {
+  animation: enterCard var(--duration-enter) var(--ease-out-expo) both;
+}
+
+/* Gold underline draw on label */
+@keyframes drawUnderline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.label-underline {
+  position: relative;
+  padding-bottom: 3px;
+  display: inline-block;
+}
+.label-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--color-gold);
+  transform-origin: left center;
+  animation: drawUnderline 500ms 220ms var(--ease-out-expo) both;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter,
+  .animate-enter-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .label-underline::after {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}
+
+/* Interactive panel hover depth */
+.panel-interactive {
+  transition: background-color var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+.panel-interactive:hover {
+  background-color: var(--color-surface-raised);
+  box-shadow: 0 4px 16px oklch(14% 0.020 55 / 0.06);
+}

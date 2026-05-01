@@ -118,6 +118,23 @@ Added per-video analysis tab to the report dashboard, matching the detail level 
 
 ---
 
+### Prototype 2 — Landing Overhaul (completed May 1)
+
+Ran `/impeccable bolder` to amplify the landing page and add two new sections (GIA origin story + pricing).
+
+**Changes shipped:**
+
+- **Hero.tsx** — full rewrite: decorative maroon arc bleeds off top-right, gold rule before eyebrow, headline scaled to `8vw/7.5rem`, report card gets solid maroon header strip with `@maelingkitchen` in gold and labeled insight rows (Top insight / Audience gap / Hook pattern), social proof bar added below CTAs (67 creators in beta / 4.8 avg rating / 2min report time).
+- **GIAStory.tsx** (new) — two-column origin story section: left is a solid maroon editorial panel with faint giant GIA watermark and gold "SOFI AI — Philippines" badge; right tells why existing tools fail Filipino creators (Taglish, cultural context), signed by the SOFI AI team in Quezon City.
+- **Pricing.tsx** (new) — three-tier PHP pricing on `--color-surface-raised`: Free / ₱299 Starter / ₱799 Pro. Pro card uses solid maroon background with cream text and gold checkmarks. Gold "Most popular" outline badge. Contact line at bottom.
+- **FinalCTA.tsx** — replaced centered cream section with full maroon background section; cream headline, gold eyebrow, decorative ring elements, CTA button inverts to cream-on-maroon.
+- **Nav.tsx** — added Story and Pricing anchor links.
+- **page.tsx** — updated section order: Nav → Hero → HowItWorks → GIAStory → WhatGIAShows → Positioning → Pricing → FinalCTA → Footer.
+
+Production build clean. All 7 static routes pass.
+
+---
+
 ## Verification
 
 - `pnpm dev` → all 5 routes load without errors.

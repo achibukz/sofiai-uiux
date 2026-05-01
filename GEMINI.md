@@ -28,9 +28,10 @@ Source-of-truth documents:
 
 ```bash
 # Run from repo root
-pnpm dev      # local dev (delegates to apps/web)
-pnpm build    # production build (run before pushing if shipping fast)
-pnpm lint     # if configured
+pnpm dev          # local dev (delegates to apps/web)
+pnpm build        # production build (run before pushing if shipping fast)
+pnpm lint         # if configured
+pnpm screenshots  # capture progress report screenshots
 ```
 
 ## Testing

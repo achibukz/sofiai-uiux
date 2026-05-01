@@ -7,7 +7,8 @@
     "build": "pnpm --filter web build",
     "lint": "pnpm --filter web lint",
     "test": "pnpm --filter web test",
-    "cypress": "pnpm --filter web cypress"
+    "cypress": "pnpm --filter web cypress",
+    "screenshots": "pnpm --filter web cypress:run --spec cypress/e2e/capture_screenshots.cy.ts"
   },
   "workspaces": ["apps/*"]
 }

@@ -26,12 +26,14 @@ The applicant is a QA Engineer / Data Analyst / Full-Stack Developer working on 
 
 ### Day 1 — Foundation & Design Direction (May 1–2)
 
-1. **Init repo** (`apps/web`): Next.js 15 + Tailwind v4 + TypeScript. Deploy empty shell to Vercel immediately so deploys are never the blocker.
+1. **Init repo** (`apps/web`): monorepo structure with Next.js 15 + Tailwind v4 + TypeScript at `apps/web/`. Root `package.json` delegates `dev`, `build`, `lint` to the workspace. Deploy empty shell to Vercel immediately so deploys are never the blocker.
 2. **Run design skills back-to-back** to produce the visual system:
    - `impeccable` → audit the existing landing at `https://sofi-ai-gia.netlify.app/`, identify what's generic, define the upgrade direction.
    - `frontend-design` or `redesign-skill` → generate the actual component-level direction (typography scale, color, motion, hero composition).
-3. Lock: typography (one editorial display + one neutral sans), color tokens (single-accent + warm neutrals), spacing scale, motion principles.
-4. Build mock data layer: `lib/mockReport.ts` — one believable Filipino creator profile (e.g., a food/lifestyle micro-creator) with hook score, audience signals, sentiment breakdown, and 3 post recommendations.
+3. Lock: typography (one editorial display + one neutral sans), color tokens (single-accent + warm neutrals), spacing scale, motion principles. **After this step, write `docs/design.md`** capturing every locked token and decision so future sessions don't re-derive them.
+4. **Write `docs/architecture.md`** — monorepo layout, module responsibilities, and data flow. Do this before touching any component so the structure is agreed on first.
+5. **Install test tooling:** Jest (unit) + Cypress (E2E) into `apps/web/`. Wire `pnpm test` and `pnpm cypress` at workspace level.
+6. Build mock data layer: `apps/web/lib/mockReport.ts` — one believable Filipino creator profile (e.g., a food/lifestyle micro-creator) with hook score, audience signals, sentiment breakdown, and 3 post recommendations.
 
 ### Day 2 — Landing Page Redesign
 
@@ -100,10 +102,13 @@ Replace the current landing's playful-only voice with a premium-playful hybrid t
 ## Verification
 
 - `pnpm dev` → all 5 routes load without errors.
-- Manually click through: landing → /analyze → submit → /analyzing → /report/[slug]. Every CTA goes somewhere sensible.
+- `pnpm test` → Jest unit tests for `lib/reportNarrative.ts` pass.
+- `pnpm cypress run` → Cypress E2E suite passes: landing → /analyze → /analyzing → /report/[slug], plus /report/sample standalone.
+- Manually click through every CTA on desktop. Every CTA goes somewhere sensible.
 - `/report/sample` loads with no input required (linked publicly from landing).
 - Mobile (375px) and desktop (1440px) both pass a visual scan — no overflow, no broken type.
 - Vercel preview deploy is green and shareable.
 - Video < 3 minutes, audio audible, screen recording readable.
 - `docs/specs.md` is clean Markdown with no broken bullets.
 - `CLAUDE.md` exists and explicitly excludes thesis content from the product.
+- `docs/architecture.md` and `docs/design.md` both exist and are current.

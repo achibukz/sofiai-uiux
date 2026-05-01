@@ -12,22 +12,42 @@ Source-of-truth documents:
 
 - `docs/specs.md` — the original brief plus locked decisions.
 - `docs/PRD.md` — product requirements, modules, and testing posture.
+- `docs/architecture.md` — monorepo layout, module responsibilities, data flow.
+- `docs/design.md` — visual system (generated after design-skill run).
 - `plan.md` — day-by-day execution plan.
 
 ## Stack
 
+- Monorepo: Next.js app lives at `apps/web/`
 - Next.js 15 (App Router) + TypeScript + Tailwind v4
 - Deployed to Vercel
 - Package manager: **pnpm**
-- No backend, no database, no API integrations. All data hardcoded in `lib/mockReport.ts`.
+- No backend, no database, no API integrations. All data hardcoded in `apps/web/lib/mockReport.ts`.
 
 ## Commands
 
 ```bash
-pnpm dev      # local dev
+# Run from repo root
+pnpm dev      # local dev (delegates to apps/web)
 pnpm build    # production build (run before pushing if shipping fast)
 pnpm lint     # if configured
 ```
+
+## Testing
+
+- **Unit tests:** Jest — pure modules only (`lib/reportNarrative.ts`). Run with `pnpm test`.
+- **E2E tests:** Cypress — covers the full user flow (landing → /analyze → /analyzing → /report/[slug]) and the sample report route. Run with `pnpm cypress`.
+- No tests for presentational components, route shells, or the mock data file.
+- No timer/animation assertions (overhead not justified at this scope).
+- Config lives at `apps/web/jest.config.ts` and `apps/web/cypress/`.
+
+## Docs
+
+- `docs/specs.md` — brief + locked decisions
+- `docs/PRD.md` — product requirements, modules, testing posture
+- `docs/architecture.md` — monorepo layout, module responsibilities, data flow
+- `docs/design.md` — visual system (typography, color tokens, motion) — generated after design-skill run
+- `plan.md` — day-by-day execution plan
 
 ## Hard rules
 

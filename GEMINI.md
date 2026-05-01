@@ -1,4 +1,4 @@
-# CLAUDE.md
+# GEMINI.md
 
 Rules for any Claude session working in this repo.
 
@@ -73,16 +73,7 @@ Everything is hardcoded. Don't add Prisma, don't add `fetch` to TikTok, don't ad
 
 ## Design direction
 
-**Color palette: SOFI AI brand identity — light theme.** Warm cream backgrounds (`#FAF7F0`), deep maroon primary (`#7A1528`), gold secondary (`#C9A84C`). All color tokens in `app/globals.css` are translated to oklch for Tailwind v4. Do not introduce dark backgrounds or amber/orange accents — the rebrand to the brand identity is locked.
-
-Tone: **premium-playful hybrid** — editorial typography and structure with personality moments. Warm and approachable, not cold SaaS.
-
-### Report dashboard tabs
-The report page (`/report/[slug]`) has two tabs:
-- **Overview** — hook score, audience signals, sentiment, post ideas, footer actions
-- **Video Breakdown** — per-video analysis table with expandable accordion rows
-
-Video breakdown data lives in `mockReport.videoBreakdown` (8 videos for @maelingkitchen). Each video has: hook type, trigger, pacing, text overlay, spoken hook, visual elements, spoken hook analysis, why it works, improvement, and full engagement metrics. `VideoBreakdown.tsx` renders the table. `ReportTabs.tsx` is the client tab switcher that wraps both tabs.
+Drive visual direction via the `impeccable`, `frontend-design`, and `redesign-skill` skills. Tone: **premium-playful hybrid** — editorial typography and structure with personality moments. Differentiates from the current playful-only landing at <https://sofi-ai-gia.netlify.app/>.
 
 ## Code conventions
 

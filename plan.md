@@ -47,6 +47,25 @@ Replace the current landing's playful-only voice with a premium-playful hybrid t
 - Social proof / sample report CTA — link to the live sample report page.
 - Pricing / get started — single CTA, no friction.
 
+### Color Rebrand (completed May 1) — SOFI AI Brand Identity
+
+Replaced the dark amber palette with the actual SOFI AI brand colors sourced from `sofi-ai-gia.netlify.app`:
+- **Light theme**: cream bg (`#FAF7F0`), white surface, deep maroon primary (`#7A1528`), gold secondary (`#C9A84C`)
+- Updated `apps/web/app/globals.css` @theme block (all oklch values)
+- Fixed hardcoded dark bg in `Nav.tsx`
+- Updated `docs/design.md` Color Tokens section + Tone section
+- Updated `CLAUDE.md` design direction notes
+
+### Video Breakdown Feature (completed May 1)
+
+Added per-video analysis tab to the report dashboard, matching the detail level of `docs/sample1.pdf` and `docs/sample2.pdf`:
+- `apps/web/lib/mockReport.ts` — added `VideoEntry` type + `videoBreakdown` array (8 videos for @maelingkitchen with full hook analysis per video)
+- `apps/web/components/report/ReportTabs.tsx` — client component for tab switching (Overview | Video Breakdown)
+- `apps/web/components/report/VideoBreakdown.tsx` — accordion table with full per-video detail cards
+- Updated `apps/web/app/report/[slug]/page.tsx` to use ReportTabs
+
+---
+
 ### Day 3 — Product Flow + Report Dashboard
 
 **Routes:**

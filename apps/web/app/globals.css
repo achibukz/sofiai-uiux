@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg:              oklch(97% 0.008 75);
+  --color-surface:         oklch(99% 0.004 80);
+  --color-surface-raised:  oklch(95% 0.015 75);
+  --color-border:          oklch(86% 0.025 75);
+  --color-accent:          oklch(32% 0.135 15);
+  --color-accent-muted:    oklch(95% 0.015 15);
+  --color-accent-dim:      oklch(40% 0.130 15);
+  --color-gold:            oklch(72% 0.110 75);
+  --color-text:            oklch(14% 0.020 55);
+  --color-text-muted:      oklch(28% 0.035 55);
+  --color-text-faint:      oklch(62% 0.025 60);
+  --color-sentiment-pos:   oklch(48% 0.14 148);
+  --color-sentiment-neu:   oklch(55% 0.10 75);
+  --color-sentiment-neg:   oklch(36% 0.13 15);
+
+  --font-sans:    'Bricolage Grotesque', sans-serif;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+
+  --text-display: clamp(3.25rem, 7vw, 6.5rem);
+  --text-hero:    clamp(2rem, 4vw, 3.5rem);
+  --text-2xl:     clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-xl:      clamp(1.125rem, 1.5vw, 1.375rem);
+  --text-lg:      clamp(1.0625rem, 1.25vw, 1.1875rem);
+  --text-base:    1rem;
+  --text-sm:      0.875rem;
+  --text-xs:      0.75rem;
+
+  --spacing-section:       clamp(96px, 12vw, 160px);
+  --spacing-section-major: clamp(128px, 16vw, 224px);
+  --spacing-container:     clamp(24px, 5vw, 80px);
+
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart:  cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast:   150ms;
+  --duration-mid:    300ms;
+  --duration-slow:   500ms;
+  --duration-enter:  700ms;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes enterUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-enter {
+  animation: enterUp var(--duration-enter) var(--ease-out-expo) both;
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-up {
+  animation: revealUp 500ms var(--ease-out-expo) both;
+}
+
+@keyframes pulseRing {
+  0%   { transform: scale(1);   opacity: 0.4; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* CTA button elevation */
+.btn-primary {
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+.btn-primary:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 32px oklch(32% 0.135 15 / 0.20);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+/* Hero report card — document-placement entrance */
+@keyframes enterCard {
+  from {
+    opacity: 0;
+    transform: translateY(16px) rotate(-1deg) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-enter-card {
+  animation: enterCard var(--duration-enter) var(--ease-out-expo) both;
+}
+
+/* Gold underline draw on label */
+@keyframes drawUnderline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.label-underline {
+  position: relative;
+  padding-bottom: 3px;
+  display: inline-block;
+}
+.label-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--color-gold);
+  transform-origin: left center;
+  animation: drawUnderline 500ms 220ms var(--ease-out-expo) both;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter,
+  .animate-enter-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .label-underline::after {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}
+
+/* Interactive panel hover depth */
+.panel-interactive {
+  transition: background-color var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-fast) var(--ease-out-expo);
+}
+.panel-interactive:hover {
+  background-color: var(--color-surface-raised);
+  box-shadow: 0 4px 16px oklch(14% 0.020 55 / 0.06);
+}

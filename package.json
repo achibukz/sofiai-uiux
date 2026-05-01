@@ -1,0 +1,14 @@
+{
+  "name": "sofiai-uiux",
+  "private": true,
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "lint": "pnpm --filter web lint",
+    "test": "pnpm --filter web test",
+    "cypress": "pnpm --filter web cypress",
+    "screenshots": "pnpm --filter web cypress:run --spec cypress/e2e/capture_screenshots.cy.ts"
+  },
+  "workspaces": ["apps/*"]
+}

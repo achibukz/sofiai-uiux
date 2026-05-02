@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)'
 
@@ -47,14 +47,13 @@ function LightbulbIcon() {
   )
 }
 
-const sections = [
+const features = [
   {
     title: 'Hook Score',
     icon: <CrosshairIcon />,
-    description:
-      'Know which openings grab attention and which lose it. GIA scores every hook type in your last 30 posts and tells you exactly which patterns hold viewers past the 5-second mark.',
+    description: 'GIA scores every hook type in your last 30 posts and tells you exactly which patterns hold viewers past the 5-second mark.',
     preview: (
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-3 w-full">
         <div className="flex items-center justify-between mb-1">
           <span style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Hook Score</span>
           <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-accent)' }}>72 / 100</span>
@@ -70,10 +69,9 @@ const sections = [
   {
     title: 'Audience Signals',
     icon: <UsersIcon />,
-    description:
-      'See who\'s actually watching and when they tune in. GIA maps your real audience by age, location, and viewing time — so you can post when your people are most active.',
+    description: 'GIA maps your real audience by location and viewing time — so you can post when your people are most active.',
     preview: (
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-3 w-full">
         {[
           { name: 'Metro Manila', pct: 58 },
           { name: 'Cebu', pct: 19 },
@@ -96,10 +94,9 @@ const sections = [
   {
     title: 'Sentiment Analysis',
     icon: <MessageHeartIcon />,
-    description:
-      'Understand what your audience feels, in their own words. GIA reads your comments — in Filipino and English — and surfaces the emotional signal behind the numbers.',
+    description: 'GIA reads your comments — in Filipino and English — and surfaces the emotional signal behind the numbers.',
     preview: (
-      <div className="flex gap-3 w-full max-w-xs">
+      <div className="flex gap-3 w-full">
         {[
           { label: 'Positive', pct: 68, color: 'var(--color-sentiment-pos)' },
           { label: 'Neutral', pct: 22, color: 'var(--color-sentiment-neu)' },
@@ -121,10 +118,9 @@ const sections = [
   {
     title: 'Post Recommendations',
     icon: <LightbulbIcon />,
-    description:
-      'Get 3 specific ideas to try this week, with reasoning. Every suggestion is tied to your actual data — not generic tips that work for anyone.',
+    description: 'Every suggestion is tied to your actual data — not generic tips that work for anyone.',
     preview: (
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-3 w-full">
         {['7PM dinner series', 'Cebu regional spotlight', 'Question-hook comparison post'].map((idea, i) => (
           <div key={i} className="flex gap-3 items-start">
             <span style={{ fontSize: '0.6875rem', fontWeight: 800, color: 'var(--color-text-faint)', minWidth: 20, paddingTop: 2 }}>0{i + 1}</span>
@@ -137,71 +133,101 @@ const sections = [
 ]
 
 export default function WhatGIAShows() {
-  const [visibleSections, setVisibleSections] = useState<Set<number>>(new Set())
+  const [gridVisible, setGridVisible] = useState(false)
+  const [headerVisible, setHeaderVisible] = useState(false)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) {
-      setVisibleSections(new Set(sections.map((_, i) => i)))
+      setGridVisible(true)
+      setHeaderVisible(true)
       return
     }
 
-    const elements = document.querySelectorAll<HTMLElement>('[data-what-section]')
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const idx = parseInt((entry.target as HTMLElement).dataset.whatSection ?? '0')
-            setVisibleSections(prev => new Set([...prev, idx]))
-          }
+          if (!entry.isIntersecting) return
+          if (entry.target === headerRef.current) setHeaderVisible(true)
+          if (entry.target === gridRef.current) setGridVisible(true)
         })
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     )
-    elements.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
+    if (headerRef.current) obs.observe(headerRef.current)
+    if (gridRef.current) obs.observe(gridRef.current)
+    return () => obs.disconnect()
   }, [])
 
   return (
-    <div id="what-gia-shows">
-      {sections.map((section, i) => {
-        const visible = visibleSections.has(i)
-        const isEven = i % 2 === 0
-
-        const textEntry: React.CSSProperties = {
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(28px)',
-          transition: `opacity 500ms 0ms ${EASE}, transform 500ms 0ms ${EASE}`,
-        }
-        const cardEntry: React.CSSProperties = {
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(28px)',
-          transition: `opacity 500ms 120ms ${EASE}, transform 500ms 120ms ${EASE}`,
-        }
-
-        return (
-          <section
-            key={i}
-            data-what-section={i}
+    <section
+      id="what-gia-shows"
+      style={{
+        backgroundColor: 'var(--color-bg)',
+        paddingTop: 'var(--spacing-section)',
+        paddingBottom: 'var(--spacing-section)',
+        paddingLeft: 'var(--spacing-container)',
+        paddingRight: 'var(--spacing-container)',
+      }}
+    >
+      <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+        <div
+          ref={headerRef}
+          style={{
+            marginBottom: 'clamp(32px, 5vw, 48px)',
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? 'translateY(0)' : 'translateY(20px)',
+            transition: `opacity 500ms 0ms ${EASE}, transform 500ms 0ms ${EASE}`,
+          }}
+        >
+          <p
+            className="text-[--color-accent] uppercase"
+            style={{ fontWeight: 500, fontSize: '0.75rem', letterSpacing: '0.06em', marginBottom: 12 }}
+          >
+            What GIA Shows
+          </p>
+          <h2
+            className="text-[--color-text]"
             style={{
-              backgroundColor: isEven ? 'var(--color-bg)' : 'var(--color-surface)',
-              paddingTop: 'var(--spacing-section)',
-              paddingBottom: 'var(--spacing-section)',
-              paddingLeft: 'var(--spacing-container)',
-              paddingRight: 'var(--spacing-container)',
+              fontWeight: 600,
+              fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)',
+              letterSpacing: '-0.01em',
+              margin: 0,
+              lineHeight: 1.2,
             }}
           >
+            Everything you need to grow, in one report
+          </h2>
+        </div>
+
+        <div
+          ref={gridRef}
+          className="what-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 'clamp(16px, 2.5vw, 24px)',
+          }}
+        >
+          {features.map((feature, i) => (
             <div
+              key={i}
               style={{
-                maxWidth: '1280px',
-                margin: '0 auto',
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: 'clamp(48px, 8vw, 96px)',
-                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 16,
+                padding: 'clamp(24px, 3vw, 32px)',
+                backgroundColor: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 16,
+                opacity: gridVisible ? 1 : 0,
+                transform: gridVisible ? 'translateY(0)' : 'translateY(24px)',
+                transition: `opacity 500ms ${i * 80}ms ${EASE}, transform 500ms ${i * 80}ms ${EASE}`,
               }}
             >
-              <div style={{ order: isEven ? 0 : 1, ...textEntry }}>
+              <div>
                 <div
                   style={{
                     display: 'inline-flex',
@@ -212,54 +238,52 @@ export default function WhatGIAShows() {
                     borderRadius: 10,
                     backgroundColor: 'var(--color-accent-muted)',
                     color: 'var(--color-accent)',
-                    marginBottom: 20,
+                    marginBottom: 16,
                   }}
                 >
-                  {section.icon}
+                  {feature.icon}
                 </div>
-                <h2
+                <h3
                   className="text-[--color-text]"
                   style={{
                     fontWeight: 600,
-                    fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)',
+                    fontSize: 'clamp(1.0625rem, 1.5vw, 1.25rem)',
                     letterSpacing: '-0.01em',
-                    margin: '0 0 16px 0',
+                    margin: '0 0 8px 0',
                     lineHeight: 1.2,
                   }}
                 >
-                  {section.title}
-                </h2>
+                  {feature.title}
+                </h3>
                 <p
                   className="text-[--color-text-muted]"
-                  style={{ fontWeight: 400, fontSize: '1rem', lineHeight: 1.65, margin: 0 }}
+                  style={{ fontWeight: 400, fontSize: '0.875rem', lineHeight: 1.6, margin: 0 }}
                 >
-                  {section.description}
+                  {feature.description}
                 </p>
               </div>
 
               <div
-                className="panel-interactive flex items-center justify-center"
                 style={{
-                  order: isEven ? 1 : 0,
-                  padding: 'clamp(24px, 3vw, 40px)',
-                  backgroundColor: isEven ? 'var(--color-surface)' : 'var(--color-surface-raised)',
+                  padding: 'clamp(16px, 2vw, 24px)',
+                  backgroundColor: 'var(--color-surface-raised)',
                   border: '1px solid var(--color-border)',
-                  borderRadius: '16px',
-                  ...cardEntry,
+                  borderRadius: 12,
+                  marginTop: 'auto',
                 }}
               >
-                {section.preview}
+                {feature.preview}
               </div>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <style>{`
-              @media (max-width: 768px) {
-                .what-grid { grid-template-columns: 1fr !important; }
-              }
-            `}</style>
-          </section>
-        )
-      })}
-    </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .what-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </section>
   )
 }

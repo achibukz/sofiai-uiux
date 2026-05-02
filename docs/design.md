@@ -1,6 +1,6 @@
 # Design System — GIA Prototype
 
-Generated from `impeccable critique` + `frontend-design` run on 2026-05-01 against the existing landing at https://sofi-ai-gia.netlify.app/. These decisions are locked for the build. Do not re-derive them per session.
+Generated from `impeccable critique` + `frontend-design` run on 2026-05-01 against the existing landing at https://sofi-ai-gia.netlify.app/. Updated 2026-05-02 after full frontend overhaul (HowItWorks visuals, GIAStory colorization, dashboard 2-col layout, VideoBreakdown upgrades). These decisions are locked for the build. Do not re-derive them per session.
 
 ## Tone
 
@@ -110,6 +110,30 @@ Rhythm rule: vary section gaps intentionally. Tighter between related sections, 
 
 **Scroll reveals (report dashboard):** IntersectionObserver, threshold `0.15`. Each section: `translateY(32px → 0)` + `opacity: 0 → 1`, `--duration-slow`, `ease-out-expo`.
 
+**Section eyebrow gold underlines:** Each section label (`0.75rem / uppercase / letterspaced`) gets a sibling `<div>` gold rule (`width: 24px, height: 1.5px, background: var(--color-gold)`) that draws in via `transform: scaleX(0 → 1)` driven by the section's `visible` state. Delay: 200ms after section enters. This is the scroll-triggered variant of `drawUnderline` — not the CSS-only `.label-underline` class.
+
+**HookScore count-up:** When `visible` flips true, a `requestAnimationFrame` loop animates the displayed number from 0 to `score` over 900ms using `easeOutCubic`. Synchronized with the bar width animation.
+
+**HookScore pulse:** After the bar finishes (950ms delay), a sibling `<div>` at the dot position fires `pulseRing` once (`600ms, ease-out, 1 iteration, forwards`).
+
+**HowItWorks step visuals:** Three mini UI mockups appear above the step number on scroll enter:
+- Step 01: SVG address bar (180×40px) — pill with favicon circle, URL stub that animates `scaleX(0→1)`, maroon "go" button
+- Step 02: CSS scan animation — 3 horizontal stubs at varying widths, gold `scanLine` keyframe sweeping top-to-bottom in a loop (`animationPlayState` paused until `visible`)
+- Step 03: HTML/CSS mini report card — maroon header strip + gold data rows, enters with `translateY + opacity` on scroll
+
+**New keyframe — `scanLine`:**
+```css
+@keyframes scanLine {
+  0%   { transform: translateY(0);    opacity: 1; }
+  85%  { transform: translateY(44px); opacity: 1; }
+  100% { transform: translateY(44px); opacity: 0; }
+}
+```
+
+**VideoBreakdown expanded row:** Animated with `enterUp 250ms ease-out both` on render.
+
+**GrowthGraph entrance:** `opacity + translateY(16px → 0)` on mount, 100ms delay.
+
 **Rules:** Never animate CSS layout properties. Ease-out only (no bounce, no elastic). Hover transitions: 150ms. Active press: `scale(0.97)` at 100ms.
 
 ---
@@ -153,9 +177,12 @@ Mobile (< 768px): headline full width, report card below at reduced size.
 
 ### How It Works (landing)
 3-step horizontal timeline. NOT cards.
-- Numbers: `--color-text-faint`, 800 weight, 60px
-- Connecting line: 1px `--color-border`
-- Mobile: vertical stack
+- Each step has a mini UI mockup above the step number (visual → number → title → description)
+- Step 01: SVG address bar. Step 02: CSS scan animation with gold sweep line. Step 03: HTML mini report card with maroon header + gold data bars.
+- Numbers: `--color-text-faint`, 800 weight, 4rem
+- Connecting line: 1px `--color-border`, `top: 60px` (raised to align with visual midpoint)
+- Gold drawn underline on the "How it works" eyebrow label, driven by `visible` state
+- Mobile: vertical stack (visuals hidden, text only)
 
 ### What GIA Shows (landing)
 Full-width alternating strips with `--color-surface` background. Left text / right preview on odd, right text / left preview on even. Never a card grid.
@@ -172,31 +199,87 @@ Multi-step, one question per screen, max-width 480px centered.
 ### /analyzing State
 Full viewport. GIA wordmark (display weight, 80px) centered. Concentric pulse rings below. Status text in body muted below rings. No other elements.
 
+### GIAStory right panel (WHY GIA)
+Color palette is active on both sides of the 2-col layout. Right panel rules:
+- Blockquote text: `--color-accent` (maroon). Opening and closing guillemets: `<span>` with `color: var(--color-gold)`, `fontSize: 2em`, `verticalAlign: -0.15em` — gold drop-cap flanking effect.
+- "The story" eyebrow: `--color-accent` + drawn gold underline (`width: 24px, height: 1.5px`) on `visible` state
+- Body copy: `--color-text-muted` base. The word "for" in the final paragraph: `<em style={{ color: var(--color-accent) }}>` — single maroon accent word.
+- Gold horizontal rule (`width: 24px, height: 1.5px, background: var(--color-gold)`) between body and attribution
+- Attribution separator: `borderTop` uses gold at 35% opacity (`oklch(72% 0.110 75 / 0.35)`)
+- "Quezon City, Philippines": `--color-accent` at `opacity: 0.55`
+
+### /report Overview layout (dashboard)
+**2-column grid** below ReportHeader. Grid spec:
+```css
+grid-template-columns: 1fr 340px;
+gap: clamp(32px, 4vw, 48px);
+padding: clamp(32px, 4vw, 48px) var(--spacing-container);
+max-width: 960px;
+```
+- Left column: HookScore → AudienceSignals (stacked, `padding: 32px 0` each)
+- Right column: Sentiment → GrowthGraph (stacked, `padding: 32px 0` each)
+- Below grid: PostIdeas (3-col horizontal, full width), FooterActions
+- Mobile (< 768px): collapse to single column
+
+**Section labels** in the dashboard: `--color-accent` (not `--color-text-faint`)
+
 ### /report Hook Score
 Horizontal bar with position marker — NOT the big-number hero template.
-Track: `--color-border`. Fill: `--color-accent`. Score marker: circle at position value.
-Plain-language explanation (2-3 sentences) below the bar.
+- Track: `--color-border`, `height: 8px`. Fill: `--color-accent`. Score marker: 14px circle.
+- Label color: `--color-accent`
+- Number counts up from 0 on scroll via `requestAnimationFrame` (900ms, `easeOutCubic`)
+- `pulseRing` fires on score dot at 950ms delay (one shot)
+- Max-width: 400px (compact for left column)
+- Explanation text: `maxWidth: 56ch`
 
 ### /report Audience Signals
-- Location: left-aligned list with proportional bars + percentages
-- Age: inline text with proportional emphasis
-- Timing: 7×time-band heat strip — color intensity = engagement level
+- `padding: 32px 0` (compact, managed by grid parent)
+- Location bars: staggered fill animation (`transitionDelay: i * 80ms`). Top location at full `opacity: 1`, others tiered.
+- Heatmap: bands with `intensity > 0.6` use `--color-gold`; others use `--color-accent` at proportional opacity.
+- Section label: `--color-accent`
 
 ### /report Sentiment
-Three proportional bars (`--color-sentiment-pos/neu/neg`) + percentage labels.
-3 pull-quote examples below — indented, one per sentiment type. Tagalog quotes are intentional.
+- `padding: 32px 0` (compact for 340px right column)
+- Three vertical bars + percentage labels at 340px width — no layout change needed
+- Comment pull-quotes use `borderLeft: 1.5px` colored by sentiment tone (data-encoding, not decoration — acceptable)
+- Section label: `--color-accent`, shortened to "Sentiment"
+
+### /report Growth Graph (promoted)
+- Removed from ReportHeader. Now lives in the right column of the overview grid.
+- Rendered at `width: 100%, height: 180px` with labeled axes ("30 days ago" / follower count)
+- Entrance animation: `opacity + translateY(16px → 0)`, 100ms delay on mount.
 
 ### /report What to Post Next
-Numbered list (01, 02, 03). Numbers: `--color-text-faint`, 800 weight, 64px, positioned behind text block. Title: H3. Body: body regular. Rationale: body muted. No icon, no card borders.
+- **3-column horizontal grid** (not vertical stack): `grid-template-columns: repeat(3, 1fr)`
+- Each column: `borderTop: 2px solid var(--color-gold)`, `paddingTop: 20px`
+- Ghost numbers (01/02/03): `position: absolute`, top-right, `opacity: 0.4`, `fontSize: 3rem`
+- Staggered entrance: `80 + i * 80ms` delay per column
+- Mobile (< 640px): single column
+- Section label: `--color-accent`
 
 ### /report Video Breakdown (tab 2)
 Second tab on the report dashboard. Accessible via "Video Breakdown" tab beside "Overview".
 - Summary table: columns are #, title (truncated), views, eng. rate, hook ★ (out of 10), expand chevron.
-- Table header bg: `--color-surface-raised`. Row hover: `--color-surface-raised`. Selected/expanded row: `--color-accent-muted`.
-- Each row expands accordion-style to a full detail panel.
-- Detail panel shows: hook type badge (maroon pill), trigger + pacing inline, metrics grid (views/eng rate/likes/shares/saves/comments in `--color-bg` tiles), then text fields (text overlay, spoken hook in italic, visual elements), divider, spoken hook analysis, why it works + improvement side-by-side.
-- "Improvement" field has a distinct `--color-surface` border box to differentiate it from analysis.
-- Mock data: 8 videos for @maelingkitchen. Hook types used: CURIOSITY_GAP, RELATABILITY, CONTROVERSY, PROBLEM_SOLUTION, SOCIAL_PROOF, VISUAL_PATTERN_INTERRUPT.
+- Table header: bg `--color-surface-raised`, **bottom rule `2px solid var(--color-gold)`** (not the default `1px border`)
+- Row hover: `--color-surface-raised`. Selected/expanded row: `--color-accent-muted`.
+- Each row expands accordion-style to a detail panel with `animation: enterUp 250ms ease-out both`.
+- **Thumbnail:** Dark phone-screen bg (`oklch(14% 0.020 55)`), cream SVG play button triangle, hook score badge bottom-left in maroon, video number top-right in faint cream. No placeholder text.
+- **Hook type badges are color-coded per type:**
+  - CURIOSITY_GAP: maroon bg, cream text
+  - RELATABILITY: `--color-accent-muted` bg, maroon text
+  - CONTROVERSY: `oklch(36% 0.13 15)` bg, cream text
+  - PROBLEM_SOLUTION: `--color-gold` bg, ink text
+  - SOCIAL_PROOF: `oklch(48% 0.14 148)` bg, cream text
+  - VISUAL_PATTERN_INTERRUPT: `oklch(95% 0.015 75)` bg, ink text
+- Detail panel: hook type badge + trigger/pacing inline, metrics grid (`--color-bg` tiles), text fields, divider, spoken hook analysis, why it works + improvement side-by-side.
+- "Improvement" field: distinct `--color-surface` border box.
+- Mock data: 8 videos for @maelingkitchen.
+
+### /report ReportHeader
+- No GrowthGraph — removed, promoted to overview grid right column.
+- Single-column layout (no `1fr auto` grid).
+- GIA's take blockquote: `background: --color-accent-muted`, `borderRadius: 6px`, `border: 1px solid oklch(32% 0.135 15 / 0.10)`. No `borderLeft` side-stripe.
+- Top padding reduced to `clamp(80px, 10vw, 100px)`.
 
 ### /report Footer Actions
 Inline tertiary buttons: "Share report" / "Analyze another account" / "Export PDF (coming soon)".

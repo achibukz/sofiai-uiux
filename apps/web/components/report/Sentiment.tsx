@@ -33,29 +33,29 @@ export default function Sentiment({ sentiment }: Props) {
     <section
       ref={ref}
       style={{
-        padding: 'clamp(48px, 6vw, 80px) var(--spacing-container)',
+        padding: '32px 0',
         borderBottom: '1px solid var(--color-border)',
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(32px)',
         transition: 'opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+      <div>
         <p
           style={{
             fontWeight: 500,
             fontSize: '0.75rem',
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            color: 'var(--color-text-faint)',
-            margin: '0 0 32px 0',
+            color: 'var(--color-accent)',
+            margin: '0 0 20px 0',
           }}
         >
-          Sentiment Analysis
+          Sentiment
         </p>
 
         {/* Three bars */}
-        <div style={{ display: 'flex', gap: 20, marginBottom: 40, maxWidth: 400 }}>
+        <div style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
           {SENTIMENT_BARS.map((bar) => {
             const pct = sentiment[bar.key]
             return (
@@ -116,8 +116,8 @@ export default function Sentiment({ sentiment }: Props) {
               <div
                 key={i}
                 style={{
-                  paddingLeft: 20,
-                  borderLeft: `2px solid ${
+                  paddingLeft: 16,
+                  borderLeft: `1.5px solid ${
                     comment.tone === 'positive'
                       ? 'var(--color-sentiment-pos)'
                       : comment.tone === 'neutral'
@@ -152,3 +152,4 @@ export default function Sentiment({ sentiment }: Props) {
     </section>
   )
 }
+

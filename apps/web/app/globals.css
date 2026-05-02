@@ -127,6 +127,12 @@ html {
   animation: drawUnderline 500ms 220ms var(--ease-out-expo) both;
 }
 
+@keyframes scanLine {
+  0%   { transform: translateY(0);    opacity: 1; }
+  85%  { transform: translateY(44px); opacity: 1; }
+  100% { transform: translateY(44px); opacity: 0; }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .animate-enter,

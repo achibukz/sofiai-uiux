@@ -1,15 +1,13 @@
 import type { ReportData } from '@/lib/mockReport'
 import Tag from '@/components/ui/Tag'
-import GrowthGraph from '@/components/report/GrowthGraph'
 
 type Props = {
   creator: ReportData['creator']
   hookScoreLabel: string
   narrative: string
-  followerGrowth: number[]
 }
 
-export default function ReportHeader({ creator, hookScoreLabel, narrative, followerGrowth }: Props) {
+export default function ReportHeader({ creator, hookScoreLabel, narrative }: Props) {
   const formattedDate = new Date(creator.handle ? '2026-05-01T19:32:00+08:00' : '').toLocaleString('en-PH', {
     month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Manila',
   })
@@ -18,20 +16,13 @@ export default function ReportHeader({ creator, hookScoreLabel, narrative, follo
     <header
       style={{
         borderBottom: '1px solid var(--color-border)',
-        padding: 'clamp(96px, 12vw, 120px) var(--spacing-container) clamp(40px, 5vw, 64px)',
+        padding: 'clamp(80px, 10vw, 100px) var(--spacing-container) clamp(36px, 4.5vw, 56px)',
         backgroundColor: 'var(--color-surface)',
       }}
     >
       <div style={{ maxWidth: '960px', margin: '0 auto' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr auto',
-            gap: 'clamp(24px, 4vw, 48px)',
-            alignItems: 'start',
-          }}
-        >
-          {/* Left: main header content */}
+        <div>
+          {/* Main header content */}
           <div>
             <a
               href="/"
@@ -84,9 +75,9 @@ export default function ReportHeader({ creator, hookScoreLabel, narrative, follo
               style={{
                 margin: 0,
                 padding: '16px 20px',
-                borderLeft: '3px solid var(--color-accent)',
                 backgroundColor: 'var(--color-accent-muted)',
-                borderRadius: '0 8px 8px 0',
+                border: '1px solid oklch(32% 0.135 15 / 0.10)',
+                borderRadius: '6px',
                 fontStyle: 'italic',
                 fontSize: '1rem',
                 lineHeight: 1.7,
@@ -123,17 +114,6 @@ export default function ReportHeader({ creator, hookScoreLabel, narrative, follo
             </p>
           </div>
 
-          {/* Right: 30-day growth graph */}
-          <div
-            style={{
-              paddingTop: 40,
-              display: 'flex',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <GrowthGraph data={followerGrowth} width={200} height={64} />
-          </div>
         </div>
       </div>
 

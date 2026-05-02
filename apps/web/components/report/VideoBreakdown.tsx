@@ -16,6 +16,15 @@ const HOOK_TYPE_LABELS: Record<string, string> = {
   VISUAL_PATTERN_INTERRUPT: 'Visual Pattern Interrupt',
 }
 
+const HOOK_TYPE_COLORS: Record<string, { bg: string; color: string }> = {
+  CURIOSITY_GAP:            { bg: 'var(--color-accent)',       color: 'var(--color-bg)' },
+  RELATABILITY:             { bg: 'var(--color-accent-muted)', color: 'var(--color-accent)' },
+  CONTROVERSY:              { bg: 'oklch(36% 0.13 15)',        color: 'var(--color-bg)' },
+  PROBLEM_SOLUTION:         { bg: 'var(--color-gold)',         color: 'oklch(14% 0.020 55)' },
+  SOCIAL_PROOF:             { bg: 'oklch(48% 0.14 148)',       color: 'var(--color-bg)' },
+  VISUAL_PATTERN_INTERRUPT: { bg: 'oklch(95% 0.015 75)',       color: 'var(--color-text)' },
+}
+
 function MetricCell({ label, value }: { label: string; value: string | number }) {
   return (
     <div
@@ -46,6 +55,61 @@ function DetailField({ label, children }: { label: string; children: React.React
       </span>
       <div style={{ fontSize: '0.9375rem', lineHeight: 1.65, color: 'var(--color-text-muted)' }}>
         {children}
+      </div>
+    </div>
+  )
+}
+
+function VideoThumbnail({ hookScore, id }: { hookScore: number; id: number }) {
+  return (
+    <div
+      style={{
+        flexShrink: 0,
+        width: 120,
+        aspectRatio: '9 / 16',
+        backgroundColor: 'oklch(14% 0.020 55)',
+        borderRadius: 6,
+        position: 'relative',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {/* Play button */}
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" aria-hidden>
+        <polygon points="18,14 18,38 38,26" fill="oklch(97% 0.008 75 / 0.65)" />
+      </svg>
+      {/* Hook score badge */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 6,
+          left: 6,
+          backgroundColor: 'oklch(32% 0.135 15 / 0.85)',
+          borderRadius: 3,
+          padding: '2px 6px',
+          fontSize: '0.5rem',
+          fontWeight: 700,
+          color: 'oklch(97% 0.008 75)',
+          letterSpacing: '0.04em',
+        }}
+      >
+        ★ {hookScore}/10
+      </div>
+      {/* Video number */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 6,
+          right: 6,
+          fontSize: '0.5rem',
+          fontWeight: 600,
+          color: 'oklch(97% 0.008 75 / 0.4)',
+          letterSpacing: '0.04em',
+        }}
+      >
+        #{id}
       </div>
     </div>
   )
@@ -87,7 +151,7 @@ export default function VideoBreakdown({ videos }: Props) {
               gap: 0,
               padding: '10px 20px',
               backgroundColor: 'var(--color-surface-raised)',
-              borderBottom: '1px solid var(--color-border)',
+              borderBottom: '2px solid var(--color-gold)',
             }}
           >
             {['#', 'Title', 'Views', 'Eng. Rate', 'Hook ★', ''].map((h) => (
@@ -109,6 +173,7 @@ export default function VideoBreakdown({ videos }: Props) {
           {/* Video rows */}
           {videos.map((video) => {
             const isOpen = expandedId === video.id
+            const hookColors = HOOK_TYPE_COLORS[video.hookType] ?? HOOK_TYPE_COLORS.CURIOSITY_GAP
             return (
               <div key={video.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
                 {/* Summary row */}
@@ -169,89 +234,61 @@ export default function VideoBreakdown({ videos }: Props) {
                   </span>
                 </div>
 
-                {/* Expanded detail */}
+                {/* Expanded detail — animated entrance */}
                 {isOpen && (
                   <div
                     style={{
                       backgroundColor: 'var(--color-accent-muted)',
                       borderTop: '1px solid var(--color-border)',
                       padding: 'clamp(20px, 3vw, 32px)',
+                      animation: 'enterUp 250ms cubic-bezier(0.16, 1, 0.3, 1) both',
                     }}
                   >
-                    {/* Top row: thumbnail + hook type info */}
-                    <div style={{ display: 'flex', gap: 20, marginBottom: 24, alignItems: 'flex-start' }}>
-                      {/* Thumbnail placeholder */}
-                      <div
-                        style={{
-                          flexShrink: 0,
-                          width: 72,
-                          aspectRatio: '9 / 16',
-                          backgroundColor: 'var(--color-surface-raised)',
-                          border: '1px solid var(--color-border)',
-                          borderRadius: 6,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '6px 4px',
-                        }}
-                      >
-                        <span
+                    {/* Top section: left (badge + metrics) + right (thumbnail) */}
+                    <div style={{ display: 'flex', gap: 20, marginBottom: 28, alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        {/* Hook type info */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+                          <span
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              padding: '4px 12px',
+                              borderRadius: 99,
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              letterSpacing: '0.04em',
+                              textTransform: 'uppercase',
+                              backgroundColor: hookColors.bg,
+                              color: hookColors.color,
+                            }}
+                          >
+                            {HOOK_TYPE_LABELS[video.hookType] ?? video.hookType}
+                          </span>
+                          <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
+                            Trigger: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.trigger}</strong>
+                          </span>
+                          <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
+                            Pacing: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.pacing}</strong>
+                          </span>
+                        </div>
+                        {/* Metrics grid */}
+                        <div
                           style={{
-                            fontSize: '0.5625rem',
-                            fontWeight: 600,
-                            letterSpacing: '0.04em',
-                            textTransform: 'uppercase',
-                            color: 'var(--color-accent)',
-                            textAlign: 'center',
-                            lineHeight: 1.4,
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
+                            gap: 8,
                           }}
                         >
-                          Video Thumbnail
-                        </span>
+                          <MetricCell label="Views" value={video.views.toLocaleString()} />
+                          <MetricCell label="Eng. Rate" value={`${video.engagementRate.toFixed(1)}%`} />
+                          <MetricCell label="Likes" value={video.likes.toLocaleString()} />
+                          <MetricCell label="Shares" value={video.shares.toLocaleString()} />
+                          <MetricCell label="Saves" value={video.saves.toLocaleString()} />
+                          <MetricCell label="Comments" value={video.comments.toLocaleString()} />
+                        </div>
                       </div>
-
-                      {/* Hook type badge + meta */}
-                      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10, paddingTop: 4 }}>
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            padding: '4px 12px',
-                            borderRadius: 99,
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                            letterSpacing: '0.04em',
-                            textTransform: 'uppercase',
-                            backgroundColor: 'var(--color-accent)',
-                            color: 'var(--color-bg)',
-                          }}
-                        >
-                          {HOOK_TYPE_LABELS[video.hookType] ?? video.hookType}
-                        </span>
-                        <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-                          Trigger: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.trigger}</strong>
-                        </span>
-                        <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-                          Pacing: <strong style={{ color: 'var(--color-text)', fontWeight: 600 }}>{video.pacing}</strong>
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Metrics grid */}
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
-                        gap: 8,
-                        marginBottom: 28,
-                      }}
-                    >
-                      <MetricCell label="Views" value={video.views.toLocaleString()} />
-                      <MetricCell label="Eng. Rate" value={`${video.engagementRate.toFixed(1)}%`} />
-                      <MetricCell label="Likes" value={video.likes.toLocaleString()} />
-                      <MetricCell label="Shares" value={video.shares.toLocaleString()} />
-                      <MetricCell label="Saves" value={video.saves.toLocaleString()} />
-                      <MetricCell label="Comments" value={video.comments.toLocaleString()} />
+                      <VideoThumbnail hookScore={video.hookScore} id={video.id} />
                     </div>
 
                     {/* Text fields */}
@@ -265,13 +302,7 @@ export default function VideoBreakdown({ videos }: Props) {
                       <DetailField label="Visual Elements">
                         {video.visualElements}
                       </DetailField>
-                      <div
-                        style={{
-                          height: 1,
-                          backgroundColor: 'var(--color-border)',
-                          margin: '4px 0',
-                        }}
-                      />
+                      <div style={{ height: 1, backgroundColor: 'var(--color-border)', margin: '4px 0' }} />
                       <DetailField label="Spoken Hook Analysis">
                         {video.spokenHookAnalysis}
                       </DetailField>

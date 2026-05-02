@@ -111,34 +111,32 @@ export default function HookScore({ hookScore }: Props) {
       </div>
 
       {/* Track bar */}
-      <div
-        style={{
-          height: 8,
-          backgroundColor: 'var(--color-border)',
-          borderRadius: 4,
-          position: 'relative',
-          maxWidth: 400,
-          marginBottom: 20,
-        }}
-      >
+      <div style={{ position: 'relative', maxWidth: 400, marginBottom: 20 }}>
         <div
           style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: visible ? `${hookScore.score}%` : '0%',
-            backgroundColor: 'var(--color-accent)',
+            height: 8,
+            backgroundColor: 'var(--color-border)',
             borderRadius: 4,
-            transition: 'width 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+            overflow: 'hidden',
           }}
-        />
-        {/* Score dot */}
+        >
+          <div
+            style={{
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'var(--color-accent)',
+              transformOrigin: 'left center',
+              transform: visible ? `scaleX(${hookScore.score / 100})` : 'scaleX(0)',
+              transition: 'transform 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          />
+        </div>
+        {/* Score dot — fades in at static position after bar fills */}
         <div
           style={{
             position: 'absolute',
-            left: visible ? `${hookScore.score}%` : '0%',
-            top: '50%',
+            left: `${hookScore.score}%`,
+            top: 4,
             transform: 'translate(-50%, -50%)',
             width: 14,
             height: 14,
@@ -146,17 +144,18 @@ export default function HookScore({ hookScore }: Props) {
             backgroundColor: 'var(--color-accent)',
             boxShadow: '0 0 0 3px var(--color-surface), 0 2px 8px rgba(0,0,0,0.35)',
             zIndex: 1,
-            transition: 'left 900ms cubic-bezier(0.16, 1, 0.3, 1)',
+            opacity: visible ? 1 : 0,
+            transition: 'opacity 200ms 800ms linear',
           }}
         />
-        {/* Pulse ring — fires once after bar finishes */}
+        {/* Pulse ring */}
         {visible && (
           <div
             aria-hidden
             style={{
               position: 'absolute',
               left: `${hookScore.score}%`,
-              top: '50%',
+              top: 4,
               transform: 'translate(-50%, -50%)',
               width: 14,
               height: 14,

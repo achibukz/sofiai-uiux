@@ -209,7 +209,9 @@ Color palette is active on both sides of the 2-col layout. Right panel rules:
 - "Quezon City, Philippines": `--color-accent` at `opacity: 0.55`
 
 ### /report Overview layout (dashboard)
-**2-column grid** below ReportHeader. Grid spec:
+**ReportSummary bar** immediately below ReportHeader. Full width, `--color-surface` background with `border-bottom: 1px solid var(--color-border)`. Contains three plain-language metric explanations with colored left accent bars (maroon for hook score, gold for audience, green for sentiment). Purpose: translate the numeric metrics that follow into plain English outcomes for non-data-literate creators.
+
+**2-column grid** below ReportSummary. Grid spec:
 ```css
 grid-template-columns: 1fr 340px;
 gap: clamp(32px, 4vw, 48px);

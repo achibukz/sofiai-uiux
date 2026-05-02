@@ -2,6 +2,7 @@ import { mockReport } from '@/lib/mockReport'
 import { buildNarrative } from '@/lib/reportNarrative'
 import Nav from '@/components/landing/Nav'
 import ReportHeader from '@/components/report/ReportHeader'
+import ReportSummary from '@/components/report/ReportSummary'
 import HookScore from '@/components/report/HookScore'
 import AudienceSignals from '@/components/report/AudienceSignals'
 import Sentiment from '@/components/report/Sentiment'
@@ -16,6 +17,7 @@ export default function ReportPage() {
 
   const overview = (
     <>
+      <ReportSummary plainSummary={mockReport.plainSummary} />
       {/* 2-column data grid */}
       <div
         className="overview-grid"

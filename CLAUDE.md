@@ -77,6 +77,9 @@ Everything is hardcoded. Don't add Prisma, don't add `fetch` to TikTok, don't ad
 
 Tone: **premium-playful hybrid** — editorial typography and structure with personality moments. Warm and approachable, not cold SaaS.
 
+### User persona
+The target user is a Filipino TikTok creator who is **not data-literate**. All metric copy must translate numbers into plain Tagalog/English outcomes — what it means for their content, not what the number is. Avoid terms like "engagement rate", "correlation", "coefficient", "NLP", "polarity", "clustering". Prefer: "your hooks are strong", "most fans are from Manila", "comments are mostly positive", "viewers are sticking around past the 5-second mark".
+
 ### Landing page sections (Prototype 2 — current)
 The landing (`/`) now has these sections in order:
 
@@ -84,22 +87,24 @@ The landing (`/`) now has these sections in order:
 2. **Hero** — decorative maroon arc, gold rule eyebrow, `8vw/7.5rem` headline, maroon-header report card preview, social proof bar (67 creators / 4.8 rating / 2min)
 3. **HowItWorks** — 3-step horizontal timeline with mini UI mockup per step (SVG address bar / scan animation / mini report card). Each visual appears above the step number on scroll enter.
 4. **GIAStory** — origin story: left editorial maroon panel (giant GIA watermark, SOFI AI gold badge), right copy with gold guillemet pull-quote, drawn gold underline on eyebrow, maroon quote text, gold horizontal rule above attribution, warm maroon attribution footer
-5. **WhatGIAShows** — 4 alternating feature sections (hook score, audience signals, sentiment, recommendations)
-6. **Positioning** — feature comparison table vs TikTok built-in / generic AI tools
-7. **Pricing** — 3-tier PHP pricing: Free / ₱299 Starter / ₱799 Pro (Pro card in solid maroon)
-8. **FinalCTA** — full maroon background section with cream headline and decorative rings
-9. **Footer**
+5. **NoJargon** — "Built for creators, not analysts" section with headline "You don't need to understand analytics. GIA does it for you." Three callout cards translating jargon into plain outcomes (e.g. "72/100 correlation coefficient" → "Strong hooks"). Staggered scroll reveal animation.
+6. **WhatGIAShows** — 4 alternating feature sections (hook score, audience signals, sentiment, recommendations)
+7. **Positioning** — feature comparison table vs TikTok built-in / generic AI tools
+8. **Pricing** — 3-tier PHP pricing: Free / ₱299 Starter / ₱799 Pro (Pro card in solid maroon)
+9. **FinalCTA** — full maroon background section with cream headline and decorative rings
+10. **Footer**
 
 Component files: `components/landing/GIAStory.tsx`, `components/landing/Pricing.tsx`, `components/landing/HowItWorks.tsx`.
 
 ### Report dashboard tabs
 The report page (`/report/[slug]`) has two tabs:
-- **Overview** — 2-column grid layout (left: HookScore + AudienceSignals; right: Sentiment + GrowthGraph), then PostIdeas as 3-column horizontal, then FooterActions
+- **Overview** — ReportSummary bar with plain-language metric explanations, then 2-column grid layout (left: HookScore + AudienceSignals; right: Sentiment + GrowthGraph), then PostIdeas as 3-column horizontal, then FooterActions
 - **Video Breakdown** — per-video analysis table with expandable accordion rows
 
 **Overview layout (desktop):**
 ```
 [ReportHeader — full width]
+[ReportSummary — full width, 3 plain-language rows]
 ┌─ left (1fr) ──────────────┬─ right (340px) ───────────┐
 │ HookScore                 │ Sentiment                  │
 │ AudienceSignals           │ GrowthGraph (promoted)     │

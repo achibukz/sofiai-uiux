@@ -75,10 +75,12 @@ export default function Sentiment({ sentiment }: Props) {
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      height: `${pct}%`,
+                      height: '100%',
                       backgroundColor: bar.color,
                       opacity: 0.9,
-                      transition: 'height 700ms cubic-bezier(0.16, 1, 0.3, 1)',
+                      transformOrigin: 'bottom center',
+                      transform: visible ? `scaleY(${pct / 100})` : 'scaleY(0)',
+                      transition: 'transform 700ms cubic-bezier(0.16, 1, 0.3, 1)',
                     }}
                   />
                 </div>

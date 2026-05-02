@@ -84,11 +84,12 @@ export default function AudienceSignals({ audienceSignals }: Props) {
                   <div
                     style={{
                       height: '100%',
-                      width: visible ? `${(loc.percentage / maxPct) * 100}%` : '0%',
+                      width: '100%',
                       backgroundColor: 'var(--color-accent)',
-                      borderRadius: 3,
                       opacity: i === 0 ? 1 : 0.7 - i * 0.12,
-                      transition: `width 600ms ${i * 80}ms cubic-bezier(0.16, 1, 0.3, 1)`,
+                      transformOrigin: 'left center',
+                      transform: visible ? `scaleX(${loc.percentage / maxPct})` : 'scaleX(0)',
+                      transition: `transform 600ms ${i * 80}ms cubic-bezier(0.16, 1, 0.3, 1)`,
                     }}
                   />
                 </div>
@@ -143,7 +144,7 @@ export default function AudienceSignals({ audienceSignals }: Props) {
                 <div
                   key={band.label}
                   className="flex flex-col items-center gap-2"
-                  style={{ flex: 1 }}
+                  style={{ flex: 1, height: '100%', justifyContent: 'flex-end' }}
                 >
                   <div
                     style={{
@@ -152,7 +153,9 @@ export default function AudienceSignals({ audienceSignals }: Props) {
                       backgroundColor: isHot ? 'var(--color-gold)' : 'var(--color-accent)',
                       borderRadius: '3px 3px 0 0',
                       opacity: isHot ? 0.9 : 0.3 + band.intensity * 0.5,
-                      transition: 'height 600ms cubic-bezier(0.16, 1, 0.3, 1)',
+                      transformOrigin: 'bottom center',
+                      transform: visible ? 'scaleY(1)' : 'scaleY(0)',
+                      transition: 'transform 600ms cubic-bezier(0.16, 1, 0.3, 1)',
                     }}
                   />
                 </div>

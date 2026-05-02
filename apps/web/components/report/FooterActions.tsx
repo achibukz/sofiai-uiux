@@ -59,21 +59,35 @@ export default function FooterActions() {
             alignItems: 'center',
             transition: 'background-color 150ms',
           }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'var(--color-accent-muted)' }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent' }}
         >
           Analyze another account
         </Link>
 
-        <span
-          title="Coming soon"
+        <a
+          href="/sample1.pdf"
+          download="GIA-Report-Sample.pdf"
           style={{
+            padding: '10px 20px',
+            borderRadius: 999,
+            border: '1px solid var(--color-accent)',
+            backgroundColor: 'transparent',
+            color: 'var(--color-accent)',
+            fontFamily: 'var(--font-sans)',
             fontSize: '0.875rem',
-            color: 'var(--color-text-faint)',
-            cursor: 'default',
-            padding: '10px 4px',
+            fontWeight: 600,
+            letterSpacing: '0.02em',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            transition: 'background-color 150ms',
           }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'var(--color-accent-muted)' }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.backgroundColor = 'transparent' }}
         >
           Export PDF
-        </span>
+        </a>
       </div>
     </footer>
   )

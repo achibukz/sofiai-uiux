@@ -101,7 +101,7 @@ export default function GIAStory() {
                 marginBottom: 'clamp(28px, 4vw, 40px)',
               }}
             >
-              SOFI AI — Philippines
+              SOFI AI, Philippines
             </span>
 
             <h2
@@ -207,7 +207,7 @@ export default function GIAStory() {
                 maxWidth: '52ch',
               }}
             >
-              GIA was built from the ground up to understand Filipino creators. She reads your comments the way your audience does — in the language they actually use. She knows your niche, your posting patterns, and the cultural context that makes content resonate.
+              GIA was built from the ground up to understand Filipino creators. She reads your comments the way your audience does, in the language they actually use. She knows your niche, your posting patterns, and the cultural context that makes content resonate.
             </p>
 
             <p
@@ -231,29 +231,10 @@ export default function GIAStory() {
             style={{
               paddingTop: 20,
               borderTop: '1px solid oklch(72% 0.110 75 / 0.35)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
             }}
           >
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: '50%',
-                backgroundColor: 'var(--color-accent-muted)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <span style={{ fontWeight: 800, fontSize: '0.6875rem', color: 'var(--color-accent)' }}>SA</span>
-            </div>
-            <div>
-              <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)' }}>SOFI AI Team</div>
-              <div style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--color-accent)', opacity: 0.55 }}>Quezon City, Philippines</div>
-            </div>
+            <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)', marginBottom: 3 }}>SOFI AI Team</div>
+            <div style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--color-accent)', opacity: 0.7 }}>Quezon City, Philippines</div>
           </div>
         </div>
       </div>

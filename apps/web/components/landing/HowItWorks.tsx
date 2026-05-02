@@ -101,7 +101,7 @@ const steps = [
   {
     number: '01',
     title: 'Paste your TikTok link',
-    description: 'Drop in your profile URL — that\'s all we need to get started.',
+    description: 'Drop in your profile URL. That\'s all we need to get started.',
     visual: (v: boolean) => <Step1Visual visible={v} />,
   },
   {
@@ -189,8 +189,8 @@ export default function HowItWorks() {
                   style={{
                     position: 'absolute',
                     top: 60,
-                    left: '50%',
-                    right: '-20px',
+                    left: 'calc(50% + 20px)',
+                    right: '-40px',
                     height: 1,
                     backgroundColor: 'var(--color-border)',
                     zIndex: 0,

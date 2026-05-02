@@ -47,21 +47,21 @@ export default function Nav() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           <Link
-            href="#story"
+            href="/#story"
             className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
             style={{ fontWeight: 400 }}
           >
             Story
           </Link>
           <Link
-            href="#what-gia-shows"
+            href="/#what-gia-shows"
             className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
             style={{ fontWeight: 400 }}
           >
             What GIA shows
           </Link>
           <Link
-            href="#pricing"
+            href="/#pricing"
             className="text-sm text-[--color-text-muted] hover:text-[--color-text] transition-colors no-underline"
             style={{ fontWeight: 400 }}
           >

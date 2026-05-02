@@ -108,6 +108,7 @@ export default function Positioning() {
             className="grid"
             style={{
               gridTemplateColumns: '2fr 1fr 1fr 1fr',
+              alignItems: 'start',
               borderBottom: '1px solid var(--color-border)',
             }}
           >
@@ -142,6 +143,7 @@ export default function Positioning() {
               className="grid"
               style={{
                 gridTemplateColumns: '2fr 1fr 1fr 1fr',
+                alignItems: 'center',
                 borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none',
                 backgroundColor: i % 2 === 1 ? 'var(--color-surface-raised)' : 'transparent',
                 ...rowEntry(i),

@@ -4,10 +4,32 @@ describe('Capture Screenshots for Progress Report', () => {
     cy.viewport(1280, 800)
   })
 
+  const captureCleanFullPage = (name: string) => {
+    // Scroll to bottom first to trigger all intersection observers/animations
+    cy.scrollTo('bottom', { duration: 1500 })
+    cy.wait(1000)
+    cy.scrollTo('top')
+    cy.wait(2000) // Wait for everything to settle
+
+    // Temporarily disable sticky/fixed positioning for full-page capture to avoid duplication
+    cy.get('nav, [style*="position: sticky"], [style*="position:sticky"]').each(($el) => {
+      cy.wrap($el).invoke('attr', 'data-original-pos', $el.css('position'))
+      cy.wrap($el).invoke('css', 'position', 'static')
+    })
+
+    cy.screenshot(name, { capture: 'fullPage' })
+
+    // Restore original positioning
+    cy.get('[data-original-pos]').each(($el) => {
+      const originalPos = $el.attr('data-original-pos')
+      cy.wrap($el).invoke('css', 'position', originalPos)
+    })
+  }
+
   it('captures landing page', () => {
     cy.visit('/')
-    cy.wait(1000) // Allow for animations/loading
-    cy.screenshot('01-landing-page', { capture: 'fullPage' })
+    cy.wait(1000) // Allow for initial load
+    captureCleanFullPage('01-landing-page')
   })
 
   it('captures analyze page', () => {
@@ -25,7 +47,7 @@ describe('Capture Screenshots for Progress Report', () => {
   it('captures sample report - overview', () => {
     cy.visit('/report/sample')
     cy.wait(2000)
-    cy.screenshot('04-report-sample-overview', { capture: 'fullPage' })
+    captureCleanFullPage('04-report-sample-overview')
   })
 
   it('captures video breakdown section', () => {
@@ -47,12 +69,12 @@ describe('Capture Screenshots for Progress Report', () => {
     cy.wait(2000) // Wait longer for expansion animation and content
 
     // Capture the full page to ensure nothing is cut off and context is preserved
-    cy.screenshot('07-video-breakdown-expanded', { capture: 'fullPage' })
+    captureCleanFullPage('07-video-breakdown-expanded')
   })
 
   it('captures sample report - different tab if applicable', () => {
     cy.visit('/report/sample')
     cy.wait(1000)
-    cy.screenshot('05-report-sample-full', { capture: 'fullPage' })
+    captureCleanFullPage('05-report-sample-full')
   })
 })

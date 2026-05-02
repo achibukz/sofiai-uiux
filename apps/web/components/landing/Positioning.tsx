@@ -89,11 +89,16 @@ export default function Positioning() {
 
         {/* Table */}
         <div
-          ref={tableRef}
           style={{
             border: '1px solid var(--color-border)',
             borderRadius: 16,
-            overflow: 'hidden',
+            overflowX: 'auto',
+          }}
+        >
+        <div
+          ref={tableRef}
+          style={{
+            minWidth: 480,
             opacity: tableVisible ? 1 : 0,
             transition: `opacity 400ms 0ms ${EASE}`,
           }}
@@ -168,6 +173,7 @@ export default function Positioning() {
               })}
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

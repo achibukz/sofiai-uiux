@@ -117,7 +117,7 @@ export default function Positioning() {
                 style={{
                   padding: '16px 20px',
                   backgroundColor: col.highlight ? 'var(--color-accent-muted)' : 'transparent',
-                  borderLeft: col.highlight ? '1px solid var(--color-accent)/30' : '1px solid var(--color-border)',
+                  borderLeft: col.highlight ? '1px solid oklch(32% 0.135 15 / 0.20)' : '1px solid var(--color-border)',
                 }}
               >
                 <div style={{ fontWeight: 600, fontSize: '0.875rem', color: col.highlight ? 'var(--color-accent)' : 'var(--color-text)', marginBottom: 2 }}>
@@ -159,7 +159,7 @@ export default function Positioning() {
                         ? isPositive ? 'var(--color-accent)' : 'var(--color-text-faint)'
                         : val === '✓' ? 'var(--color-text-muted)' : 'var(--color-text-faint)',
                       backgroundColor: isGia ? 'var(--color-accent-muted)' : 'transparent',
-                      borderLeft: isGia ? '1px solid oklch(76% 0.185 68 / 0.15)' : '1px solid var(--color-border)',
+                      borderLeft: isGia ? '1px solid oklch(72% 0.110 75 / 0.15)' : '1px solid var(--color-border)',
                     }}
                   >
                     {val}

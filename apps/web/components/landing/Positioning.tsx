@@ -98,7 +98,7 @@ export default function Positioning() {
         <div
           ref={tableRef}
           style={{
-            minWidth: 480,
+            minWidth: 600,
             opacity: tableVisible ? 1 : 0,
             transition: `opacity 400ms 0ms ${EASE}`,
           }}
@@ -107,12 +107,11 @@ export default function Positioning() {
           <div
             className="grid"
             style={{
-              gridTemplateColumns: '2fr 1fr 1fr 1fr',
-              alignItems: 'start',
+              gridTemplateColumns: '1.5fr repeat(3, minmax(0, 1fr))',
               borderBottom: '1px solid var(--color-border)',
             }}
           >
-            <div style={{ padding: '16px 20px' }} />
+            <div style={{ padding: '16px 12px' }} />
             {[
               { label: "TikTok's built-in", sub: 'data without context' },
               { label: 'Generic AI tools', sub: 'not built for your niche' },
@@ -121,12 +120,12 @@ export default function Positioning() {
               <div
                 key={col.label}
                 style={{
-                  padding: '16px 20px',
+                  padding: '16px 12px',
                   backgroundColor: col.highlight ? 'var(--color-accent-muted)' : 'transparent',
-                  borderLeft: col.highlight ? '1px solid oklch(32% 0.135 15 / 0.20)' : '1px solid var(--color-border)',
+                  borderLeft: '1px solid var(--color-border)',
                 }}
               >
-                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: col.highlight ? 'var(--color-accent)' : 'var(--color-text)', marginBottom: 2 }}>
+                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: col.highlight ? 'var(--color-accent)' : 'var(--color-text)', marginBottom: 2, whiteSpace: 'nowrap' }}>
                   {col.label}
                 </div>
                 <div style={{ fontWeight: 400, fontSize: '0.75rem', color: col.highlight ? 'var(--color-accent-dim)' : 'var(--color-text-faint)', letterSpacing: '0.01em' }}>
@@ -142,14 +141,13 @@ export default function Positioning() {
               key={i}
               className="grid"
               style={{
-                gridTemplateColumns: '2fr 1fr 1fr 1fr',
-                alignItems: 'center',
+                gridTemplateColumns: '1.5fr repeat(3, minmax(0, 1fr))',
                 borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none',
                 backgroundColor: i % 2 === 1 ? 'var(--color-surface-raised)' : 'transparent',
                 ...rowEntry(i),
               }}
             >
-              <div style={{ padding: '14px 20px', fontSize: '0.875rem', fontWeight: 400, color: 'var(--color-text-muted)' }}>
+              <div style={{ padding: '14px 12px', fontSize: '0.875rem', fontWeight: 400, color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center' }}>
                 {row.feature}
               </div>
               {[row.tiktok, row.generic, row.gia].map((val, j) => {
@@ -159,14 +157,17 @@ export default function Positioning() {
                   <div
                     key={j}
                     style={{
-                      padding: '14px 20px',
+                      padding: '14px 12px',
                       fontSize: '0.875rem',
                       fontWeight: isPositive && isGia ? 600 : 400,
                       color: isGia
                         ? isPositive ? 'var(--color-accent)' : 'var(--color-text-faint)'
                         : val === '✓' ? 'var(--color-text-muted)' : 'var(--color-text-faint)',
                       backgroundColor: isGia ? 'var(--color-accent-muted)' : 'transparent',
-                      borderLeft: isGia ? '1px solid oklch(72% 0.110 75 / 0.15)' : '1px solid var(--color-border)',
+                      borderLeft: '1px solid var(--color-border)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {val}

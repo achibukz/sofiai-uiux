@@ -143,18 +143,31 @@ export default function GIAStory() {
             ...entry(120),
           }}
         >
-          <p
-            style={{
-              fontWeight: 600,
-              fontSize: '0.75rem',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--color-accent)',
-              margin: 0,
-            }}
-          >
-            The story
-          </p>
+          <div>
+            <p
+              style={{
+                fontWeight: 600,
+                fontSize: '0.75rem',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'var(--color-accent)',
+                margin: '0 0 6px 0',
+              }}
+            >
+              The story
+            </p>
+            {/* Gold drawn underline */}
+            <div
+              style={{
+                width: 24,
+                height: 1.5,
+                backgroundColor: 'var(--color-gold)',
+                transformOrigin: 'left center',
+                transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+                transition: `transform 500ms 320ms cubic-bezier(0.16, 1, 0.3, 1)`,
+              }}
+            />
+          </div>
 
           <blockquote
             style={{
@@ -162,12 +175,12 @@ export default function GIAStory() {
               fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)',
               letterSpacing: '-0.02em',
               lineHeight: 1.2,
-              color: 'var(--color-text)',
+              color: 'var(--color-accent)',
               margin: 0,
               maxWidth: '34ch',
             }}
           >
-            &ldquo;Most analytics tools were built for someone else.&rdquo;
+            <span style={{ color: 'var(--color-gold)', fontSize: '2em', lineHeight: 0, verticalAlign: '-0.15em', marginRight: 2 }}>&ldquo;</span>Most analytics tools were built for someone else.<span style={{ color: 'var(--color-gold)', fontSize: '2em', lineHeight: 0, verticalAlign: '-0.15em', marginLeft: 2 }}>&rdquo;</span>
           </blockquote>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -207,14 +220,17 @@ export default function GIAStory() {
                 maxWidth: '52ch',
               }}
             >
-              She&rsquo;s a product of SOFI AI, a team based in Quezon City that believes the next generation of Filipino creators deserves tools built <em>for</em> them, not adapted from tools built for someone else.
+              She&rsquo;s a product of SOFI AI, a team based in Quezon City that believes the next generation of Filipino creators deserves tools built <em style={{ color: 'var(--color-accent)' }}>for</em> them, not adapted from tools built for someone else.
             </p>
           </div>
+
+          {/* Decorative gold rule */}
+          <div style={{ width: 24, height: 1.5, backgroundColor: 'var(--color-gold)' }} />
 
           <div
             style={{
               paddingTop: 20,
-              borderTop: '1px solid var(--color-border)',
+              borderTop: '1px solid oklch(72% 0.110 75 / 0.35)',
               display: 'flex',
               alignItems: 'center',
               gap: 14,
@@ -236,7 +252,7 @@ export default function GIAStory() {
             </div>
             <div>
               <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)' }}>SOFI AI Team</div>
-              <div style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--color-text-faint)' }}>Quezon City, Philippines</div>
+              <div style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--color-accent)', opacity: 0.55 }}>Quezon City, Philippines</div>
             </div>
           </div>
         </div>

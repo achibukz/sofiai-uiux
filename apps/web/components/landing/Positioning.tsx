@@ -138,7 +138,7 @@ export default function Positioning() {
               style={{
                 gridTemplateColumns: '2fr 1fr 1fr 1fr',
                 borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none',
-                backgroundColor: i % 2 === 1 ? 'oklch(14% 0.013 52 / 0.5)' : 'transparent',
+                backgroundColor: i % 2 === 1 ? 'var(--color-surface-raised)' : 'transparent',
                 ...rowEntry(i),
               }}
             >

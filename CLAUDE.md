@@ -82,22 +82,44 @@ The landing (`/`) now has these sections in order:
 
 1. **Nav** — fixed, with anchors: Story, What GIA shows, Pricing, See sample
 2. **Hero** — decorative maroon arc, gold rule eyebrow, `8vw/7.5rem` headline, maroon-header report card preview, social proof bar (67 creators / 4.8 rating / 2min)
-3. **HowItWorks** — 3-step horizontal timeline
-4. **GIAStory** — origin story: left editorial maroon panel (giant GIA watermark, SOFI AI gold badge), right copy explaining why existing tools fail Filipino creators
+3. **HowItWorks** — 3-step horizontal timeline with mini UI mockup per step (SVG address bar / scan animation / mini report card). Each visual appears above the step number on scroll enter.
+4. **GIAStory** — origin story: left editorial maroon panel (giant GIA watermark, SOFI AI gold badge), right copy with gold guillemet pull-quote, drawn gold underline on eyebrow, maroon quote text, gold horizontal rule above attribution, warm maroon attribution footer
 5. **WhatGIAShows** — 4 alternating feature sections (hook score, audience signals, sentiment, recommendations)
 6. **Positioning** — feature comparison table vs TikTok built-in / generic AI tools
 7. **Pricing** — 3-tier PHP pricing: Free / ₱299 Starter / ₱799 Pro (Pro card in solid maroon)
 8. **FinalCTA** — full maroon background section with cream headline and decorative rings
 9. **Footer**
 
-New component files: `components/landing/GIAStory.tsx`, `components/landing/Pricing.tsx`.
+Component files: `components/landing/GIAStory.tsx`, `components/landing/Pricing.tsx`, `components/landing/HowItWorks.tsx`.
 
 ### Report dashboard tabs
 The report page (`/report/[slug]`) has two tabs:
-- **Overview** — hook score, audience signals, sentiment, post ideas, footer actions
+- **Overview** — 2-column grid layout (left: HookScore + AudienceSignals; right: Sentiment + GrowthGraph), then PostIdeas as 3-column horizontal, then FooterActions
 - **Video Breakdown** — per-video analysis table with expandable accordion rows
 
+**Overview layout (desktop):**
+```
+[ReportHeader — full width]
+┌─ left (1fr) ──────────────┬─ right (340px) ───────────┐
+│ HookScore                 │ Sentiment                  │
+│ AudienceSignals           │ GrowthGraph (promoted)     │
+└───────────────────────────┴────────────────────────────┘
+[PostIdeas — 3-col horizontal, gold top rule per col]
+[FooterActions]
+```
+Grid container: `max-width: 960px`, `grid-template-columns: 1fr 340px`, `gap: clamp(32px, 4vw, 48px)`. Collapses to single column at 768px.
+
+**GrowthGraph** is no longer in the ReportHeader — it lives in the right column of the overview grid at `height: 180px`.
+
+**ReportHeader blockquote** uses full-radius `--color-accent-muted` background + subtle full border. No `borderLeft` side-stripe.
+
 Video breakdown data lives in `mockReport.videoBreakdown` (8 videos for @maelingkitchen). Each video has: hook type, trigger, pacing, text overlay, spoken hook, visual elements, spoken hook analysis, why it works, improvement, and full engagement metrics. `VideoBreakdown.tsx` renders the table. `ReportTabs.tsx` is the client tab switcher that wraps both tabs.
+
+**Video Breakdown specifics:**
+- Table header has a `2px solid var(--color-gold)` bottom rule
+- Hook type badges are color-coded per type (not all maroon): CURIOSITY_GAP=maroon, RELATABILITY=accent-muted, CONTROVERSY=dark maroon, PROBLEM_SOLUTION=gold, SOCIAL_PROOF=green, VISUAL_PATTERN_INTERRUPT=cream
+- Thumbnail placeholder: dark phone-screen bg (`oklch(14% 0.020 55)`), cream SVG play button, hook score badge bottom-left
+- Expanded rows animate in with `enterUp` keyframe (250ms)
 
 ## Code conventions
 

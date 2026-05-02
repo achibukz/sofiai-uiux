@@ -51,6 +51,11 @@ export type ReportData = {
   videoBreakdown: VideoEntry[]
   followerGrowth: number[]
   generatedAt: string
+  plainSummary: {
+    hookScore: string
+    audience: string
+    sentiment: string
+  }
 }
 
 export const mockReport: ReportData = {
@@ -290,5 +295,13 @@ export const mockReport: ReportData = {
     43220, 43010, 43450, 43940, 44180, 44090, 44560, 45020, 44800, 45250,
     45640, 45920, 46210, 46080, 46540, 46820, 47050, 47230, 47510, 47800,
   ],
+  plainSummary: {
+    hookScore:
+      'Your hook score is 72 — your intros are strong. Viewers are sticking around past the 5-second mark.',
+    audience:
+      'Most of your audience is in Metro Manila and most active between 7–9 PM — post during these windows.',
+    sentiment:
+      'Your comments are overwhelmingly positive. Your audience genuinely loves what you\'re making.',
+  },
   generatedAt: '2026-05-01T19:32:00+08:00',
 }

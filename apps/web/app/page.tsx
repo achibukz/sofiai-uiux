@@ -2,6 +2,7 @@ import Nav from '@/components/landing/Nav'
 import Hero from '@/components/landing/Hero'
 import HowItWorks from '@/components/landing/HowItWorks'
 import GIAStory from '@/components/landing/GIAStory'
+import NoJargon from '@/components/landing/NoJargon'
 import WhatGIAShows from '@/components/landing/WhatGIAShows'
 import Positioning from '@/components/landing/Positioning'
 import Pricing from '@/components/landing/Pricing'
@@ -15,6 +16,7 @@ export default function LandingPage() {
       <Hero />
       <HowItWorks />
       <GIAStory />
+      <NoJargon />
       <WhatGIAShows />
       <Positioning />
       <Pricing />
